@@ -1,0 +1,94 @@
+<html lang="en">
+    <head>
+        <title> My bitcoin Wallet</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1.0"> 
+        <meta http-equiv="X-UA-Compatible" content="ie="edge> 
+        <! -- hicimos que se vea en explorados y se ajuste el ancho -->
+        <script type="text/javascript" src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
+
+
+    <script type="text/javascript" src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
+    <link rel ="stylesheet" href ="index_styles.css"/>
+
+    </head>
+    <body>
+      
+        <div>
+           <a href="index.html" id="head">Wallet Homepage</a>
+           <a href="live_info.html" id="head">Live Info</a>
+        
+
+        </div>
+
+        <div id="block1">
+            <h2 id="head" >A new private key has been Generated.</h2>
+			
+             <p id="privText" hidden></p>
+        </div>
+
+        <div id="block1">
+            <h2 id="head">The public key is:</h2>
+            <p id="pubKey"></p>
+        </div>
+
+        <div id="block1">
+            <h2 id="head">The address is:</h2>
+            <p id="address"></p>
+        </div>
+
+        <div id="block1">
+            <h2 id="head">The QR address is:</h2>
+            <p id="qrcode"></p>
+        </div>
+
+		<div id="block1"> 
+			<h2 id ="head">Confirmed Balance (satoshis)</h2> 
+			<p id="conf"></p> 
+			<h2 id ="head">Unconfirmed Balance (satoshis)</h2> 
+			<p id="unconf"></p> 
+			
+</div>
+		
+
+
+    </body>
+
+
+<script>
+    var privKey = bsv.PrivateKey.fromRandom()
+    document.getElementById("privText").innerHTML = privKey
+
+    var pubKey = bsv.PublicKey.fromPrivateKey(privKey)
+    document.getElementById("pubKey").innerHTML = pubKey
+
+    var address = bsv.Address.fromPublicKey(pubKey)
+    document.getElementById("address").innerHTML = address
+
+    var addressCode = 'bitcoinsv:' + address;
+    console.log(addressCode)
+    
+    new QRCode(document.getElementById("qrcode"), addressCode)
+
+	
+	const woc_api_url = 'https://api.whatsonchain.com/v1/bsv/main/address/'+address+'/balance' 
+
+	console.log(woc_api_url)
+
+
+	async function getwoc(){ 
+	const response = await fetch(woc_api_url) 
+	const data = await response.json() 
+	console.log(data) 
+	document.getElementById('conf').textContent = data.confirmed 
+	document.getElementById('unconf').textContent = data.unconfirmed
+	}
+ 
+	getwoc() 
+	
+ 
+</script>
+
+
+</html>

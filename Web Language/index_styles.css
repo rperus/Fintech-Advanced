@@ -1,0 +1,22 @@
+#block1 {
+    background-color: aquamarine;
+    padding: 20px;
+}
+
+#block2 {
+    background-color: rgb(246, 255, 127);
+    padding: 20px;
+}
+
+#block3 {
+    background-color: rgb(255, 127, 155);
+    padding: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#block5 {
+    background-color: rgb(127, 229, 255);
+    padding: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    
+}

@@ -1,0 +1,98 @@
+<html lang="en">
+    <head>
+        <title> My bitcoin Wallet</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1.0"> 
+        <meta http-equiv="X-UA-Compatible" content="ie="edge> 
+        <! -- hicimos que se vea en explorados y se ajuste el ancho -->
+        <script type="text/javascript" src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
+
+
+    <script type="text/javascript" src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
+<link rel="stylesheet" href="index_styles.css"/>
+
+    </head>
+    <body>
+      
+        <div>
+           <a href="index.html" id="head">Wallet Homepage</a>
+           <a href="live_info.html" id="head">Live Info</a>
+        
+
+        </div>
+
+    
+        <div id="block2">
+            <h2 id="head">Your public key is:</h2>
+            <p id="pubKey"></p>
+        </div>
+
+        <div id="block3">
+            <h2 id="head">Your address is:</h2>
+            <p id="address"></p>
+        </div>
+
+        <div id="block4">
+            <h2 id="head">Your QR address is:</h2>
+            <p id="qrcode"></p>
+        </div>
+
+        <img src = 
+
+        <div id="block5">
+            <h2 id="head">Confirm Balance (satoshis)</h2>
+            <p id="conf"></p>
+            <h2 id="head">Unconfirm Balance (satoshis)</h2>
+            <p id="unconf"></p>
+
+        </div>
+
+
+    </body>
+
+
+<script>
+    var privKey = bsv.PrivateKey.fromRandom()
+    document.getElementById("privText").innerHTML = privKey
+
+    var pubKey = bsv.PublicKey.fromPrivateKey(privKey)
+    document.getElementById("pubKey").innerHTML = pubKey
+
+    var address = 'a9NejCNZWKHWyyWRQ2wP'
+    document.getElementById("address").innerHTML = address
+
+    var addressCode = 'bitcoinsv:' + address;
+
+    
+    new QRCode(document.getElementById("qrcode"), addressCode)
+    console.log(addressCode)
+
+    const woc_api_url = 'https://api.whatsonchain.com/bsv/main/address/' + address + '/balance'
+    console.log(woc_api_url)
+
+
+    async function getwoc(){
+        const response = await fetch(woc_api_url)
+        const data = await response.json()
+        console.log(data)
+        document.getElementById('conf').textContent = data.confirmed
+        document.getElementById('unconf').textContent = data.unconfirmed
+
+    }
+
+    getwoc()
+ 
+    const apple = 'https://www.quandl.com/api/v3/datasets/EOD/AAPL?api_key=a9NejCNZWKHWyyWRQ2wP'
+    async function getquand()
+    const response = await fetch(apple)
+    const data1 = await response.json()
+    console.log(data1.dataset.data[0][1])
+    }
+    
+    getquand()
+
+</script>
+
+
+</html>
